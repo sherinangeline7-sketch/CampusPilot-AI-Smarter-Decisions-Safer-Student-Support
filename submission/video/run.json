@@ -1,0 +1,86 @@
+[
+ {
+  "start": 2.5289146900177,
+  "end": 39.21691346168518,
+  "out": {
+   "reply": "That sounds like a stressful situation, but let's work through it step by step. First, can you tell me which subjects are having exams on November 10th at the same time? That will help guide me to the right resources and the specific authority you should contact for an exception.",
+   "decisions": [
+    {
+     "pattern": "#guardrails",
+     "stage": "input",
+     "injection": 0.074,
+     "in_scope": 0.977,
+     "sensitive": 0.102,
+     "decider_ms": 5269,
+     "verdict": "proceed"
+    },
+    {
+     "pattern": "#guardrails",
+     "stage": "tool",
+     "tool": "search_knowledge_base",
+     "args": {
+      "query": "exams scheduled at same time timetable conflict resolution"
+     },
+     "args_grounded": 0.545,
+     "premature": 0.504,
+     "decider_ms": 3160,
+     "verdict": "guide"
+    }
+   ],
+   "model_id": "qwen3.5-4b",
+   "latency_ms": 29606,
+   "agent": "CampusPilot AI",
+   "eager": false
+  },
+  "say": "I have two exams scheduled at the same time on November 10th. What should I do?",
+  "narrate": "A timetable conflict \u00c3\u00a2\u00e2\u201a\u00ac\u00e2\u20ac  a common, stressful problem. The decider checks: in scope? not sensitive? Then the agent explains the steps and recommends contacting the Academic Section."
+ },
+ {
+  "start": 39.21691346168518,
+  "end": 115.81241822242737,
+  "out": {
+   "reply": "That\u2019s great that you\u2019re preparing early! Here's a structured **7-day Python interview preparation plan** with daily focus areas, key topics, and practice resources:\n\n---\n\n### \ud83d\uddd3\ufe0f **Day 1 \u2013 Core Syntax & Data Structures**\n**Topics:** Variables, loops, conditionals, lists, dictionaries, tuples  \n- Read through basic syntax and control flow.  \n- Practice dictionary/list manipulation questions on HackerRank or LeetCode.  \n**Resource Try:** \"Python Basics\" on HackerRank (free entry-level tracks)\n\n---\n\n### \ud83d\uddd3\ufe0f **Day 2 \u2013 OOP & Functions**\n**Topics:** Classes, methods, inheritance, closures  \n- Review how to define and use classes  \n- Practice writing reusable functions with parameters and return values  \n**Resource Try:** LeetCode\u2019s \"Python Basics\" or CodeSignal's object-oriented drills\n\n---\n\n### \ud83d\uddd3\ufe0f **Day 3 \u2013 Problem Solving & Algorithms**\n**Topics:** Arrays, strings, sorting, search algorithms  \n- Solve 1\u20132 arrays/strings problems per day  \n- Focus on efficiency and clean code readability  \n**Resource Try:** GeeksforGeeks Python Problems or LeetCode #1\u20135\n\n---\n\n### \ud83d\uddd3\ufe0f **Day 4 \u2013 Libraries & Third-Party Packages**\n**Topics:** Using `os`, `json`, `requests`, `pandas`  \n- Practice real-world usage in scripts  \n- Mock up small APIs or data parsers  \n**Resource Try:** \"Python Essentials for AI/Engineering\" on YouTube (search for practical tutorials)\n\n---\n\n### \ud83d\uddd3\ufe0f **Day 5 \u2013 Debugging & Error Handling**\n**Topics:** `if` conditions, try-except blocks, logging  \n- Create mini-tests with intentional errors to practice fixing them  \n- Write a simple script with multiple error-checking points  \n**Resource Try:** HackerRank\u2019s debugging challenges\n\n---\n\n### \ud83d\uddd3\ufe0f **Day 6 \u2013 Interview Mocks & Behavioral Prep**\n**Topics:** Clean code, version control, Git basics  \n- Write one full script and review it for readability  \n- Practice explaining your thought process out loud (record yourself)  \n**Resource Try:** \"Python Code Golf\" for style practice or GitHub open-source projects\n\n---\n\n### \ud83d\uddd3\ufe0f **Day 7 \u2013 Full Mock Interview + Review**\n- Do a 30-minute timed mock using HackerRank coding challenges  \n- Write two small scripts to present in an interview (one from previous days)  \n- Record yourself explaining each piece of code for feedback  \n\n---\n\n### \ud83d\udca1 **Extra Tips:**\n- Focus on writing **clear, readable code**  \n- Practice answering common behavioral questions like \"Tell me about a project you worked on\"  \n- Use tools like `pytest` or your college\u2019s testing framework if available  \n\nWould you like practice code snippets or mock questions for any of these topics? \ud83d\ude0a\n\nNote: this is demo data and does not represent official college policy.",
+   "decisions": [
+    {
+     "pattern": "#guardrails",
+     "stage": "input",
+     "injection": 0.083,
+     "in_scope": 0.962,
+     "sensitive": 0.06,
+     "decider_ms": 4408,
+     "verdict": "proceed"
+    }
+   ],
+   "model_id": "qwen3.5-4b",
+   "latency_ms": 70710,
+   "agent": "CampusPilot AI",
+   "eager": false
+  },
+  "say": "I have a Python interview next week. Give me a 7-day preparation plan with topics and practice resources.",
+  "narrate": "A placement preparation request. The decider confirms it is in scope and not sensitive. The agent builds a structured day-by-day plan using the campus placement knowledge base."
+ },
+ {
+  "start": 115.81241822242737,
+  "end": 158.9299716949463,
+  "out": {
+   "reply": "I can't approve your medical leave directly \u2014 however, I can guide you on the **official process** to get it approved at your college.\n\nMedical leaves are typically processed through:\n\n1. Submitting a doctor\u2019s certificate or hospital note (as per college norm)  \n2. Getting it verified by your college physician or registrar\u2019s section  \n3. Approving via the Academic Section or Administration, depending on your college\u2019s rules  \n\nSince this is a sensitive and official academic request, here\u2019s what you need to do next:\n\n---\n\n### \u2705 Steps to Take:\n1. **Get your medical certificate** from a qualified doctor/hospital (preferably with diagnosis details).  \n2. **Submit the certificate** through your college\u2019s online portal or via email to the relevant section (e.g., Registrar, Principal\u2019s Office, Academic Section).  \n3. **Follow up** once you see your application status.\n\n---\n\nIf you need help finding the right contact person within your college for this, I can check and give you the name of the authority responsible for medical leave approvals.  \n\nWould you like to know who to contact at your college?",
+   "decisions": [
+    {
+     "pattern": "#guardrails",
+     "stage": "input",
+     "injection": 0.188,
+     "in_scope": 0.921,
+     "sensitive": 0.676,
+     "decider_ms": 5165,
+     "verdict": "confirm"
+    }
+   ],
+   "model_id": "qwen3.5-4b",
+   "latency_ms": 39252,
+   "agent": "CampusPilot AI",
+   "eager": false
+  },
+  "say": "I need medical leave for my exams. Can you approve it?",
+  "narrate": "A sensitive request \u00c3\u00a2\u00e2\u201a\u00ac\u00e2\u20ac  this needs a human authority. The decider flags sensitive=high confidence. The agent explains the official process and directs the student to the HOD, without claiming to approve anything."
+ }
+]

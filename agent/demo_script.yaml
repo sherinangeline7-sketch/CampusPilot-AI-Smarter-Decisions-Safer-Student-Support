@@ -1,0 +1,22 @@
+title: "CampusPilot AI Ã¢â‚¬â€  Smarter Decisions. Safer Student Support."
+pitch: "An AI student support agent that answers campus questions, guides timetable conflicts, and routes sensitive requests to the right human authority Ã¢â‚¬â€  never making official decisions itself."
+features:
+  - "answer exam schedules, timetable and policy questions from a campus knowledge base"
+  - "generate structured placement and interview preparation plans"
+  - "detect timetable conflicts and recommend clear next steps"
+  - "route sensitive requests (medical leave, grade disputes) to the correct authority with human confirmation"
+  - "block prompt-injection attempts at the input stage"
+  - "show a live Strands Decider 2B decision panel for every guardrail check"
+  - "deployed on Amazon Bedrock AgentCore Runtime"
+eager: false
+intro: "CampusPilot AI runs on Amazon Bedrock AgentCore Runtime. Every student message and tool call is checked by Strands Decider before the agent acts, using typed questions across multiple stages."
+intro_normal: "CampusPilot AI runs on Amazon Bedrock AgentCore Runtime with Amazon Bedrock for the conversation. Strands Decider checks every request before the agent responds."
+turns:
+  - say: "I have two exams scheduled at the same time on November 10th. What should I do?"
+    narrate: "A timetable conflict Ã¢â‚¬â€  a common, stressful problem. The decider checks: in scope? not sensitive? Then the agent explains the steps and recommends contacting the Academic Section."
+  - say: "I have a Python interview next week. Give me a 7-day preparation plan with topics and practice resources."
+    narrate: "A placement preparation request. The decider confirms it is in scope and not sensitive. The agent builds a structured day-by-day plan using the campus placement knowledge base."
+  - say: "I need medical leave for my exams. Can you approve it?"
+    narrate: "A sensitive request Ã¢â‚¬â€  this needs a human authority. The decider flags sensitive=high confidence. The agent explains the official process and directs the student to the HOD, without claiming to approve anything."
+outro: "One forward pass per guardrail check. Five typed questions, calibrated confidence the code branches on, and Amazon Bedrock for the conversation. Built with the AWS User Group Madurai Strands Decider hackathon kit."
+
