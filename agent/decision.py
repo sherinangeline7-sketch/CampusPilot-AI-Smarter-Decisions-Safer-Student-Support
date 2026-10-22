@@ -3,15 +3,15 @@
 What it does
     Guards every student interaction at two stages:
 
-    1. INPUT STAGE â€” before the LLM processes the message:
-       - Is this a prompt-injection or jailbreak attempt? â†’ Deny
-       - Is this within the agent's scope (campus / academic / placement support)? â†’ Guide if not
+    1. INPUT STAGE -- before the LLM processes the message:
+       - Is this a prompt-injection or jailbreak attempt? -> Deny
+       - Is this within the agent's scope (campus / academic / placement support)? -> Guide if not
        - Is this a sensitive request requiring human authority (medical leave, grade disputes,
-         financial aid, personal data changes)? â†’ Confirm (human-in-the-loop)
+         financial aid, personal data changes)? -> Confirm (human-in-the-loop)
 
-    2. TOOL STAGE â€” before each tool call:
-       - Are the tool arguments grounded in what the student actually said? â†’ Guide if not
-       - Is it premature to call this tool without first clarifying with the student? â†’ Guide if so
+    2. TOOL STAGE -- before each tool call:
+       - Are the tool arguments grounded in what the student actually said? -> Guide if not
+       - Is it premature to call this tool without first clarifying with the student? -> Guide if so
 
     Safe, in-scope, non-sensitive requests proceed directly. Sensitive ones pause for human
     confirmation. Unsafe or out-of-scope ones are blocked or redirected politely.
@@ -54,12 +54,9 @@ from strands.interventions import Confirm, Deny, Guide, InterventionHandler, Pro
 from decider_kit import Decider
 from decider_kit.patterns.guardrails import render_messages
 
-# -- remove this line when /new-agent replaces the kit example --
-# Original CampusPilot AI decision guard.
-
 PATTERN_TAG = "#guardrails"
 
-# One sentence describing what this agent is for â€” used in the in_scope question.
+# One sentence describing what this agent is for -- used in the in_scope question.
 SCOPE = "academic and placement support for engineering college students in India"
 
 # Keywords that indicate a request likely needs a human authority.
@@ -74,7 +71,7 @@ SENSITIVE_KEYWORDS = (
 TOOLS_WITH_ARGS = {"search_knowledge_base", "get_exam_schedule", "get_timetable",
                    "get_placement_resources", "get_escalation_contact"}
 
-# Confidence threshold: above â†’ yes, below â†’ no, inside unsure band â†’ confirm.
+# Confidence threshold: above -> yes, below -> no, inside unsure band -> confirm.
 YES_THRESHOLD: float = 0.5
 UNSURE_BAND: tuple[float, float] = (0.38, 0.62)
 
@@ -90,7 +87,7 @@ QUESTIONS = {
         f"Is this message within the assistant's purpose: {SCOPE}?",
         {"true":  "the request is about exams, timetables, assignments, placements, college "
                   "policies, or other campus academic matters",
-         "false": "the request is unrelated to the student's college life â€” e.g. general "
+         "false": "the request is unrelated to the student's college life -- e.g. general "
                   "world knowledge, personal finance unrelated to college fees, entertainment"}),
 
     "sensitive": Decider.noul(
@@ -99,7 +96,7 @@ QUESTIONS = {
         "authority (HOD, registrar, welfare officer, examination cell) can approve or process?",
         {"true":  "the student mentions medical leave, sick leave, grade dispute, grade change, "
                   "revaluation, fee waiver, scholarship, bonafide certificate, transfer certificate, "
-                  "attendance condonation, or asks for approval of any official college process â€” "
+                  "attendance condonation, or asks for approval of any official college process -- "
                   "even if phrased as a question like 'can you approve' or 'I need leave'",
          "false": "the student is asking for factual information (exam dates, timetable, policies), "
                   "study resources, a preparation plan, or general academic guidance that requires "
@@ -109,15 +106,15 @@ QUESTIONS = {
     "args_grounded": Decider.noul(
         "Are the arguments in the proposed tool call grounded in information the student "
         "actually provided in the conversation?",
-        {"true":  "every argument value traces back to something the student explicitly said â€” "
-                  "a subject name, a day, a topic â€” not assumed or invented by the assistant",
+        {"true":  "every argument value traces back to something the student explicitly said -- "
+                  "a subject name, a day, a topic -- not assumed or invented by the assistant",
          "false": "an argument was assumed or invented; the student did not provide that "
                   "specific value"}),
 
     "premature": Decider.noul(
         "Is it premature to call this tool now, before asking the student for a clarification?",
         {"true":  "the student's request is ambiguous and the assistant should ask a clarifying "
-                  "question first â€” e.g. 'which subject?' or 'which day?' â€” before calling the tool",
+                  "question first -- e.g. 'which subject?' or 'which day?' -- before calling the tool",
          "false": "the request is clear enough; there is nothing left to clarify before calling "
                   "the tool"}),
 }
@@ -141,7 +138,7 @@ class CampusRequestGuard(InterventionHandler):
         self.yes = yes
         self.unsure_band = unsure_band
         self.log: list[dict[str, Any]] = []
-        self._guided: set[str] = set()   # tool calls already sent back; retry â†’ deny
+        self._guided: set[str] = set()   # tool calls already sent back; retry -> deny
 
     def before_invocation(self, event, **kwargs):
         """Check every incoming student message before the LLM processes it."""
@@ -150,8 +147,10 @@ class CampusRequestGuard(InterventionHandler):
             return Proceed()
 
         last_text = render_messages(event.messages, last=1)
-        sensitive_hint = "NOTE: this message contains keywords that may indicate a sensitive request.\n\n" \
+        sensitive_hint = (
+            "NOTE: this message contains keywords that may indicate a sensitive request.\n\n"
             if _looks_sensitive(last_text) else ""
+        )
         state = (
             f"A student message sent to an AI assistant for {SCOPE}.\n\n"
             f"{sensitive_hint}"
@@ -196,8 +195,8 @@ class CampusRequestGuard(InterventionHandler):
                 )
             )
 
-        # 3. Sensitive request â€” unsure: still confirm; sure: confirm.
-        if sens >= lo:   # at or above the lower unsure boundary â†’ treat as potentially sensitive
+        # 3. Sensitive request -- at or above the lower unsure boundary -> confirm.
+        if sens >= lo:
             rec["verdict"] = "confirm"
             self.log.append(rec)
             return Confirm(
@@ -209,7 +208,7 @@ class CampusRequestGuard(InterventionHandler):
                 response="yes",
             )
 
-        # 4. Safe, in-scope, non-sensitive â€” proceed.
+        # 4. Safe, in-scope, non-sensitive -- proceed.
         rec["verdict"] = "proceed"
         self.log.append(rec)
         return Proceed()
@@ -223,7 +222,7 @@ class CampusRequestGuard(InterventionHandler):
         args = event.tool_use.get("input") or {}
         sig  = f"{name}:{json.dumps(args, sort_keys=True)}"
 
-        # Guide must converge: same call sent back unchanged â†’ deny.
+        # Guide must converge: same call sent back unchanged -> deny.
         if sig in self._guided:
             rec = {
                 "pattern": PATTERN_TAG, "stage": "tool", "tool": name, "args": args,
@@ -249,16 +248,14 @@ class CampusRequestGuard(InterventionHandler):
         premature = a["premature"].p_yes or 0.0
 
         rec: dict[str, Any] = {
-            "pattern":      PATTERN_TAG,
-            "stage":        "tool",
-            "tool":         name,
-            "args":         args,
+            "pattern":       PATTERN_TAG,
+            "stage":         "tool",
+            "tool":          name,
+            "args":          args,
             "args_grounded": round(grounded, 3),
-            "premature":    round(premature, 3),
-            "decider_ms":   round(self.decider.last_latency_ms or 0),
+            "premature":     round(premature, 3),
+            "decider_ms":    round(self.decider.last_latency_ms or 0),
         }
-
-        lo, hi = self.unsure_band
 
         if grounded < self.yes:
             rec["verdict"] = "guide"
@@ -266,7 +263,7 @@ class CampusRequestGuard(InterventionHandler):
             self.log.append(rec)
             return Guide(
                 feedback=(
-                    "The tool arguments were not clearly stated by the student â€” "
+                    "The tool arguments were not clearly stated by the student -- "
                     "do not assume or invent values. Ask the student to specify "
                     "(e.g. 'which subject?', 'which day?', 'which topic?') before retrying."
                 )
